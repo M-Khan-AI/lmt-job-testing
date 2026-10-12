@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerVantage | All-in-One Job Portal & Placement Preparation Hub</title>
+  <meta name="description" content="Discover top tech jobs, master Aptitude, DSA, Core CS technical rounds, HR behavioral frameworks, and crack company hiring patterns.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="brand-logo" onclick="switchTab('jobs')">
+        <div class="logo-badge">⚡</div>
+        <span>Career<span style="color: var(--primary);">Vantage</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li>
+          <button class="nav-btn active" data-target="jobs">
+            <span>💼</span> Job Portal
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-target="prep">
+            <span>📚</span> Preparation Hub
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-target="companies">
+            <span>🏢</span> Company Hiring Process
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-target="dsa">
+            <span>🧠</span> Dedicated DSA Sheet
+            <span class="badge-pill badge-primary" id="dsaNavPill">0%</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-target="applications">
+            <span>📌</span> My Tracker
+            <span class="badge-pill badge-success" id="navAppsBadge">0</span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <button class="btn-post-job" id="postJobNavBtn">
+          <span>+</span> Post a Job
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileNavDrawer" style="display: none; background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button class="nav-btn" data-target="jobs" onclick="switchTab('jobs')">💼 Job Portal</button>
+      <button class="nav-btn" data-target="prep" onclick="switchTab('prep')">📚 Preparation Hub</button>
+      <button class="nav-btn" data-target="companies" onclick="switchTab('companies')">🏢 Company Hiring Process</button>
+      <button class="nav-btn" data-target="dsa" onclick="switchTab('dsa')">🧠 Dedicated DSA Sheet</button>
+      <button class="nav-btn" data-target="applications" onclick="switchTab('applications')">📌 My Tracker</button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+
+    <!-- Unified Hero Banner -->
+    <div class="hero-banner">
+      <h1 class="hero-title">
+        Your Gateway to <span class="hero-highlight">Dream Tech Careers</span> & Placement Mastery
+      </h1>
+      <p class="hero-subtitle">
+        Curated high-paying job opportunities, structured round-by-round hiring roadmaps, comprehensive CS & Aptitude preparation, and topic-wise DSA sheets with code solutions.
+      </p>
+
+      <!-- Stats Strip -->
+      <div class="stats-strip">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(79, 70, 229, 0.1); color: var(--primary);">💼</div>
+          <div>
+            <div class="stat-value" id="statTotalJobs">0</div>
+            <div class="stat-label">Active Opportunities</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(6, 182, 212, 0.1); color: var(--secondary);">🏢</div>
+          <div>
+            <div class="stat-value" id="statTotalCompanies">0</div>
+            <div class="stat-label">Company Blueprints</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">🧠</div>
+          <div>
+            <div class="stat-value" id="statDsaSolved">0</div>
+            <div class="stat-label">DSA Sheet Progress</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--accent);">📌</div>
+          <div>
+            <div class="stat-value" id="statAppsCount">0</div>
+            <div class="stat-label">Applications Submitted</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SECTION 1: JOB PORTAL                          -->
+    <!-- ============================================== -->
+    <section id="section_jobs" class="view-section active">
+      <div class="filter-panel">
+        <div class="filter-grid">
+          <div class="input-group">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="jobSearchInput" class="form-control" placeholder="Search by job title, company, or skills (e.g. SDE, React, Amazon)...">
+          </div>
+          <div>
+            <select id="jobLocationSelect" class="select-control">
+              <option value="all">📍 All Locations</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Pune">Pune</option>
+              <option value="Gurgaon">Gurgaon</option>
+              <option value="Remote">Remote</option>
+            </select>
+          </div>
+          <div>
+            <select id="jobExpSelect" class="select-control">
+              <option value="all">⏳ All Experience</option>
+              <option value="Fresher">Fresher / Graduate</option>
+              <option value="0-2">0 - 2 Years</option>
+              <option value="1-3">1 - 3 Years</option>
+            </select>
+          </div>
+          <div>
+            <select id="jobTypeSelect" class="select-control">
+              <option value="all">💼 All Job Types</option>
+              <option value="Full-Time">Full-Time</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="jobGridContainer" class="job-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 2: PREPARATION HUB                     -->
+    <!-- ============================================== -->
+    <section id="section_prep" class="view-section">
+      <!-- Prep Sub-Navigation -->
+      <nav class="prep-tabs-nav">
+        <button class="prep-tab-btn active" data-subtarget="quant">
+          <span>🧮</span> Aptitude (Quant, Logical, Verbal)
+        </button>
+        <button class="prep-tab-btn" data-subtarget="tech">
+          <span>💻</span> Technical (DBMS, OS, CN, OOP)
+        </button>
+        <button class="prep-tab-btn" data-subtarget="hr">
+          <span>🤝</span> HR & Behavioral (STAR Method)
+        </button>
+      </nav>
+
+      <!-- Subview 1: Aptitude -->
+      <div id="prepView_quant" class="prep-subview active">
+        <div id="aptitudeContainer">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Subview 2: Technical -->
+      <div id="prepView_tech" class="prep-subview">
+        <div id="technicalContainer">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Subview 3: HR Prep -->
+      <div id="prepView_hr" class="prep-subview">
+        <div id="hrContainer">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 3: COMPANY HIRING PROCESS              -->
+    <!-- ============================================== -->
+    <section id="section_companies" class="view-section">
+      <div class="filter-panel">
+        <div class="filter-grid" style="grid-template-columns: 2fr 1fr;">
+          <div class="input-group">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="companySearchInput" class="form-control" placeholder="Search company by name (e.g. Amazon, Google, TCS, Infosys)...">
+          </div>
+          <div>
+            <select id="companyTierSelect" class="select-control">
+              <option value="all">🏢 All Company Categories</option>
+              <option value="Product">Product / MAANG</option>
+              <option value="IT Services">IT Services / Mass Recruiters</option>
+              <option value="FinTech">FinTech / Investment Banking</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="companyGridContainer" class="job-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 4: DEDICATED TOPIC-WISE DSA SHEET      -->
+    <!-- ============================================== -->
+    <section id="section_dsa" class="view-section">
+      <!-- Progress Bar Card -->
+      <div class="dsa-progress-card">
+        <div class="dsa-progress-header">
+          <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">Curated Topic-Wise SDE Sheet</h2>
+            <p style="opacity: 0.9; font-size: 0.92rem;">Crack coding rounds of top product & tech companies. Track your completion progress in real-time.</p>
+          </div>
+          <div style="text-align: right;">
+            <div id="dsaProgressText" style="font-size: 1.25rem; font-weight: 800;">0 of 0 Solved (0%)</div>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div id="dsaProgressBar" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- DSA Filter Panel -->
+      <div class="filter-panel">
+        <div class="filter-grid" style="grid-template-columns: 2fr 1fr 1fr;">
+          <div class="input-group">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="dsaSearchInput" class="form-control" placeholder="Search problem name or company tags (e.g. Kadane, LCA, Amazon)...">
+          </div>
+          <div>
+            <select id="dsaTopicSelect" class="select-control">
+              <option value="all">📂 All Topics</option>
+              <option value="Arrays">Arrays</option>
+              <option value="Strings">Strings</option>
+              <option value="Two Pointers & Sliding Window">Two Pointers & Sliding Window</option>
+              <option value="Linked Lists">Linked Lists</option>
+              <option value="Stacks & Queues">Stacks & Queues</option>
+              <option value="Binary Trees & BST">Binary Trees & BST</option>
+              <option value="Dynamic Programming">Dynamic Programming</option>
+              <option value="Graphs">Graphs</option>
+            </select>
+          </div>
+          <div>
+            <select id="dsaDiffSelect" class="select-control">
+              <option value="all">⚡ All Difficulties</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- DSA Problems Table -->
+      <div class="dsa-table-container">
+        <table class="dsa-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Status</th>
+              <th>Problem Name & Topic</th>
+              <th style="width: 110px;">Difficulty</th>
+              <th>Asked By Companies</th>
+              <th style="width: 100px;">Practice</th>
+              <th style="width: 140px;">Solution</th>
+            </tr>
+          </thead>
+          <tbody id="dsaTableBody">
+            <!-- Rendered via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 5: MY APPLICATIONS & SAVED JOBS        -->
+    <!-- ============================================== -->
+    <section id="section_applications" class="view-section">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <!-- Left: Applications Submitted -->
+        <div class="prep-card">
+          <div class="prep-card-header">
+            <h3 style="font-size: 1.25rem; font-weight: 700;">📨 Submitted Applications</h3>
+          </div>
+          <div id="myApplicationsContainer">
+            <!-- Rendered via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Right: Saved Bookmarks -->
+        <div class="prep-card">
+          <div class="prep-card-header">
+            <h3 style="font-size: 1.25rem; font-weight: 700;">❤️ Bookmarked Opportunities</h3>
+          </div>
+          <div id="myBookmarksContainer">
+            <!-- Rendered via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODALS                                         -->
+  <!-- ============================================== -->
+
+  <!-- 1. Job Detail Modal -->
+  <div class="modal-overlay" id="jobDetailModal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">Job Details & Specifications</div>
+        <button class="modal-close-btn" onclick="closeModal('jobDetailModal')">✕</button>
+      </div>
+      <div class="modal-body" id="jobDetailModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Apply Job Modal -->
+  <div class="modal-overlay" id="applyJobModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="applyJobTitle">Submit Application</div>
+        <button class="modal-close-btn" onclick="closeModal('applyJobModal')">✕</button>
+      </div>
+      <form id="applyJobForm">
+        <div class="modal-body">
+          <input type="hidden" id="applyJobIdInput">
+          
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Full Name *</label>
+            <input type="text" id="applicantName" required class="form-control" style="padding-left: 14px;" placeholder="John Doe">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Email Address *</label>
+            <input type="email" id="applicantEmail" required class="form-control" style="padding-left: 14px;" placeholder="john@example.com">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">College / University *</label>
+              <input type="text" id="applicantCollege" required class="form-control" style="padding-left: 14px;" placeholder="IIT / NIT / State University">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Graduation Year *</label>
+              <select id="applicantBatch" class="select-control">
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2027">2027</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Resume / Drive Link *</label>
+            <input type="url" id="applicantResume" required class="form-control" style="padding-left: 14px;" placeholder="https://drive.google.com/your-resume or LinkedIn">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Note to Recruiter (Optional)</label>
+            <textarea id="applicantNote" rows="3" class="form-control" style="padding-left: 14px; resize: vertical;" placeholder="Briefly mention why you are a strong fit for this role..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('applyJobModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Post a Job Modal (Employer) -->
+  <div class="modal-overlay" id="postJobModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">Post a New Job Opportunity</div>
+        <button class="modal-close-btn" onclick="closeModal('postJobModal')">✕</button>
+      </div>
+      <form id="postJobForm">
+        <div class="modal-body">
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Job Title *</label>
+            <input type="text" id="newJobTitle" required class="form-control" style="padding-left: 14px;" placeholder="e.g. Frontend Engineer">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Company Name *</label>
+              <input type="text" id="newJobCompany" required class="form-control" style="padding-left: 14px;" placeholder="e.g. Atlassian">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Location *</label>
+              <input type="text" id="newJobLocation" required class="form-control" style="padding-left: 14px;" placeholder="e.g. Bangalore / Remote">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Job Type</label>
+              <select id="newJobType" class="select-control">
+                <option value="Full-Time">Full-Time</option>
+                <option value="Internship">Internship</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Experience Required</label>
+              <select id="newJobExp" class="select-control">
+                <option value="Fresher">Fresher (0 Years)</option>
+                <option value="0-2 Years">0-2 Years</option>
+                <option value="1-3 Years">1-3 Years</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Annual Compensation / Stipend *</label>
+            <input type="text" id="newJobSalary" required class="form-control" style="padding-left: 14px;" placeholder="e.g. ₹12,00,000 - ₹16,00,000 / year">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Key Skill Tags (comma-separated)</label>
+            <input type="text" id="newJobTags" class="form-control" style="padding-left: 14px;" placeholder="React, Node.js, TypeScript, PostgreSQL">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 6px;">Detailed Job Description *</label>
+            <textarea id="newJobDesc" required rows="3" class="form-control" style="padding-left: 14px; resize: vertical;" placeholder="Describe responsibilities and requirements..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('postJobModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Publish Job Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Company Blueprint Modal -->
+  <div class="modal-overlay" id="companyDetailModal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">Company Hiring Architecture</div>
+        <button class="modal-close-btn" onclick="closeModal('companyDetailModal')">✕</button>
+      </div>
+      <div class="modal-body" id="companyDetailModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. DSA Solution Modal -->
+  <div class="modal-overlay" id="dsaSolutionModal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <div class="modal-title">Solution Approach & Code</div>
+        <button class="modal-close-btn" onclick="closeModal('dsaSolutionModal')">✕</button>
+      </div>
+      <div class="modal-body" id="dsaSolutionModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Script Imports in exact execution order -->
+  <script src="data/jobs.js"></script>
+  <script src="data/prep-aptitude.js"></script>
+  <script src="data/prep-technical.js"></script>
+  <script src="data/prep-hr.js"></script>
+  <script src="data/companies.js"></script>
+  <script src="data/dsa-sheet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
